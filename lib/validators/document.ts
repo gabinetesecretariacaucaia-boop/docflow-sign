@@ -11,3 +11,7 @@ export const uploadSignedSchema = z.object({
   base64File: z.string().min(10, "Arquivo inválido"),
   fileName: z.string().min(3, "Nome de arquivo inválido")
 });
+
+export const rejectDocumentSchema = z.object({
+  reason: z.string().trim().min(5, "Informe o motivo da recusa.").max(500, "Motivo muito longo.")
+});

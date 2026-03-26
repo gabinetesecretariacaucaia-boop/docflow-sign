@@ -3,6 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { DocumentStatusBadge } from "@/components/documents/document-status-badge";
 import { ActivityTimeline } from "@/components/documents/activity-timeline";
 import { SignedUploadForm } from "@/components/documents/signed-upload-form";
+import { RejectDocumentForm } from "@/components/documents/reject-document-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { DocumentEventRecord, DocumentRecord } from "@/types/document";
@@ -47,8 +48,19 @@ export default async function DocumentDetailPage({ params }: { params: Promise<{
               <Button>Baixar assinado</Button>
             </a>
           ) : null}
-          {isReceiver && doc.status === "pending_signature" ? <SignedUploadForm documentId={doc.id} /> : null}
-          {isSender && !doc.signed_file_url ? (
+          {isReceiver && doc.status === "pending_signature" ? (
+            <div className="space-y-4">
+              <SignedUploadForm documentId={doc.id} />
+              <RejectDocumentForm documentId={doc.id} />
+            </div>
+          ) : null}
+          {doc.rejection_reason ? (
+            <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+              <p className="text-sm font-medium text-red-900">Motivo da recusa</p>
+              <p className="mt-1 text-sm text-red-700">{doc.rejection_reason}</p>
+            </div>
+          ) : null}
+          {isSender && !doc.signed_file_url && doc.status !== "rejected" ? (
             <p className="text-sm text-zinc-500">Aguardando upload assinado pelo receptor.</p>
           ) : null}
         </CardContent>

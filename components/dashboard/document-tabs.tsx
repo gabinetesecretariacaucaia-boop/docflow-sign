@@ -35,8 +35,9 @@ function DocumentList({ documents }: { documents: DocumentRecord[] }) {
 
 export function DocumentTabs({ documents, userId }: { documents: DocumentRecord[]; userId: string }) {
   const toSign = documents.filter((d) => d.receiver_id === userId && d.status === "pending_signature");
-  const sent = documents.filter((d) => d.sender_id === userId);
-  const signed = documents.filter((d) => d.status !== "pending_signature");
+  const sent = documents.filter((d) => d.sender_id === userId && d.status === "pending_signature");
+  const signed = documents.filter((d) => d.status === "signed_uploaded" || d.status === "downloaded_by_sender");
+  const rejected = documents.filter((d) => d.status === "rejected");
 
   return (
     <Tabs defaultValue="to-sign">
@@ -44,6 +45,7 @@ export function DocumentTabs({ documents, userId }: { documents: DocumentRecord[
         <TabsTrigger value="to-sign">Para assinar</TabsTrigger>
         <TabsTrigger value="sent">Enviados</TabsTrigger>
         <TabsTrigger value="signed">Assinados</TabsTrigger>
+        <TabsTrigger value="rejected">Rejeitados</TabsTrigger>
       </TabsList>
       <TabsContent value="to-sign">
         <DocumentList documents={toSign} />
@@ -53,6 +55,9 @@ export function DocumentTabs({ documents, userId }: { documents: DocumentRecord[
       </TabsContent>
       <TabsContent value="signed">
         <DocumentList documents={signed} />
+      </TabsContent>
+      <TabsContent value="rejected">
+        <DocumentList documents={rejected} />
       </TabsContent>
     </Tabs>
   );

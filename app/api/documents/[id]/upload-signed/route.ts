@@ -50,6 +50,9 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     const doc = await getDocumentWithParticipants(id);
     if (!doc.data) return NextResponse.json({ error: "Documento não encontrado." }, { status: 404 });
     if (doc.data.receiver_id !== authData.user.id) return NextResponse.json({ error: "Acesso negado." }, { status: 403 });
+    if (doc.data.status !== "pending_signature") {
+      return NextResponse.json({ error: "Este documento não está mais pendente de assinatura." }, { status: 400 });
+    }
 
     const safeFileName = sanitizePdfFileName(fileName);
     const objectPath = `${authData.user.id}/${crypto.randomUUID()}-${safeFileName}`;

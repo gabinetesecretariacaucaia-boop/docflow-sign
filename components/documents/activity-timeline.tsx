@@ -5,7 +5,8 @@ const labels: Record<string, string> = {
   sent: "Notificação enviada",
   downloaded_for_signature: "Receptor baixou para assinar",
   signed_uploaded: "Assinado enviado",
-  downloaded_by_sender: "Remetente baixou assinado"
+  downloaded_by_sender: "Remetente baixou assinado",
+  rejected: "Documento rejeitado"
 };
 
 export function ActivityTimeline({ events }: { events: DocumentEventRecord[] }) {

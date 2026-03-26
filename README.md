@@ -13,9 +13,10 @@ Aplicação SaaS para gestão de fluxo de documentos com assinatura externa.
 - Upload de documento original e envio para receptor
 - Download para assinatura externa
 - Upload da versão assinada
+- Rejeição de documento com motivo informado pelo receptor
 - Notificação por e-mail para cada etapa relevante
 - Log completo de eventos (`document_events`)
-- Dashboard com abas: Para assinar, Enviados, Assinados
+- Dashboard com abas: Para assinar, Enviados, Assinados e Rejeitados
 
 ## Pré-requisitos
 - Node.js 20+
@@ -32,8 +33,9 @@ npm install
 ```bash
 cp .env.example .env.local
 ```
-3. Execute a migration SQL:
-- arquivo: `supabase/migrations/001_init.sql`
+3. Execute as migrations SQL na ordem:
+- `supabase/migrations/001_init.sql`
+- `supabase/migrations/002_document_rejection.sql`
 - rode no SQL Editor do Supabase
 
 ## Rodar local

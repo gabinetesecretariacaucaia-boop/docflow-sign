@@ -1,4 +1,4 @@
-export type DocumentStatus = "pending_signature" | "signed_uploaded" | "downloaded_by_sender";
+export type DocumentStatus = "pending_signature" | "signed_uploaded" | "downloaded_by_sender" | "rejected";
 
 export type DocumentCategory = "contract" | "agreement" | "legal" | "other";
 
@@ -7,7 +7,8 @@ export type DocumentEventType =
   | "sent"
   | "downloaded_for_signature"
   | "signed_uploaded"
-  | "downloaded_by_sender";
+  | "downloaded_by_sender"
+  | "rejected";
 
 export interface DocumentRecord {
   id: string;
@@ -20,6 +21,7 @@ export interface DocumentRecord {
   status: DocumentStatus;
   created_at: string;
   signed_at: string | null;
+  rejection_reason: string | null;
 }
 
 export interface DocumentEventRecord {

@@ -16,6 +16,7 @@ export type Database = {
           receiver_id: string;
           original_file_url: string;
           signed_file_url: string | null;
+          rejection_reason: string | null;
           category: DocumentCategory;
           status: DocumentStatus;
           created_at: string;
@@ -28,6 +29,7 @@ export type Database = {
           receiver_id: string;
           original_file_url: string;
           signed_file_url?: string | null;
+          rejection_reason?: string | null;
           category?: DocumentCategory;
           status?: DocumentStatus;
           created_at?: string;
